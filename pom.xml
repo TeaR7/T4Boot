@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~  Copyright (c) 2019-2024, T4CLOUD (zqr.it@t4cloud.com).
+  ~  <p>
+  ~  Licensed under the GNU General Public License 3.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~  <p>
+  ~ https://www.gnu.org/licenses/
+  ~  <p>
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.t4cloud</groupId>
+    <artifactId>T4Boot</artifactId>
+    <version>${t4cloud.boot.version}</version>
+    <name>${project.artifactId}</name>
+    <packaging>pom</packaging>
+    <url>https://www.t4cloud.com</url>
+
+    <properties>
+        <t4cloud.boot.version>0.1.2</t4cloud.boot.version>
+        <t4cloud.boot.core.version>0.1.4</t4cloud.boot.core.version>
+        <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
+        <swagger.fox.version>2.9.2</swagger.fox.version>
+    </properties>
+
+    <!-- 子模块 -->
+    <modules>
+        <module>T4Boot-System</module>
+    </modules>
+
+    <dependencies>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--web 模块-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+                <!--                <exclusions>-->
+                <!--                    &lt;!&ndash;排除tomcat依赖&ndash;&gt;-->
+                <!--                    <exclusion>-->
+                <!--                        <artifactId>spring-boot-starter-tomcat</artifactId>-->
+                <!--                        <groupId>org.springframework.boot</groupId>-->
+                <!--                    </exclusion>-->
+                <!--                </exclusions>-->
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <profiles>
+        <!--开发环境-->
+        <profile>
+            <id>dev</id>
+            <properties>
+                <active.profile>dev</active.profile>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- end -->
+        <!--生产环境-->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <active.profile>prod</active.profile>
+            </properties>
+        </profile>
+        <!-- end -->
+    </profiles>
+
+    <build>
+        <finalName>${project.name}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <!--指定编译版本-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <encoding>utf-8</encoding>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <!-- 打包跳过测试 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <!-- 避免font文件的二进制文件格式压缩破坏 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>eot</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>svg</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+
+            <!--   自动选择环境  -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <!-- 配置资源文件中的变量分隔符（标识符），这里配置了两种变量分隔符 -->
+                    <delimiters>
+                        <delimiter>${*}</delimiter> <!-- 以${}为分隔符，例如 ${jdbc.url}  -->
+                        <delimiter>@</delimiter>    <!-- 以@为分隔符，例如 @jdbc.url@ -->
+                    </delimiters>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <!-- 私服仓库 开发用的仓库中不需要该配置 -->
+        <!--        <repository>-->
+        <!--            <id>t4cloud</id>-->
+        <!--            <name>t4cloud</name>-->
+        <!--            <url>http://nexus.t4cloud.com/repository/maven-public/</url>-->
+        <!--            <snapshots>-->
+        <!--                <enabled>true</enabled>-->
+        <!--            </snapshots>-->
+        <!--            <releases>-->
+        <!--                <enabled>true</enabled>-->
+        <!--            </releases>-->
+        <!--        </repository>-->
+
+        <!-- 老的github的私服仓库 开发用的仓库中不需要该配置 -->
+        <!--        <repository>-->
+        <!--            <id>t4cloud-maven</id>-->
+        <!--            <name>t4cloud</name>-->
+        <!--            <url>https://raw.github.com/TeaR7/T4-Repo/master</url>-->
+        <!--            <snapshots>-->
+        <!--                <enabled>true</enabled>-->
+        <!--                <updatePolicy>always</updatePolicy>-->
+        <!--            </snapshots>-->
+        <!--&lt;!&ndash;            <url>https://gitee.com/Terry7/T4-Repo/raw/master</url>&ndash;&gt;-->
+        <!--        </repository>-->
+
+        <!--阿里云主仓库，代理了maven central和jcenter仓库-->
+        <repository>
+            <id>aliyun</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+</project>
