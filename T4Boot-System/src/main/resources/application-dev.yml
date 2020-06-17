@@ -22,7 +22,7 @@ spring:
   #redis 配置
   redis:
     database: 8
-    host: cloud.t4cloud.com
+    host: 127.0.0.1
     lettuce:
       pool:
         max-active: 8   #最大连接数据库连接数,设 0 为没有限制
@@ -31,7 +31,7 @@ spring:
         min-idle: 0     #最小等待连接中的数量,设 0 为没有限制
       shutdown-timeout: 100ms
     password: ''
-    port: 16378
+    port: 6379
   autoconfigure:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   #数据库 配置
@@ -70,9 +70,9 @@ spring:
         connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
       datasource:
         master:
-          url: jdbc:mysql://gz-cdb-9pis4q35.sql.tencentcdb.com:62520/t4-cloud?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull
-          username: t4cloud
-          password: t4cloud@123
+          url: jdbc:mysql://127.0.0.1:3306/t4-boot?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=GMT%2B8&zeroDateTimeBehavior=convertToNull
+          username: root
+          password: root
           driver-class-name: com.mysql.cj.jdbc.Driver
           # 多数据源配置
           #multi-datasource1:
