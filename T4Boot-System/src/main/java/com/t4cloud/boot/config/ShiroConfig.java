@@ -68,6 +68,11 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/actuator/httptrace/**", "anon");
         filterChainDefinitionMap.put("/actuator/redis/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
+        filterChainDefinitionMap.put("/T4Cloud-Support/actuator/metrics/**", "anon");
+        filterChainDefinitionMap.put("/T4Cloud-Support/actuator/env/**", "anon");
+        filterChainDefinitionMap.put("/T4Cloud-Support/actuator/httptrace/**", "anon");
+        filterChainDefinitionMap.put("/T4Cloud-Support/actuator/redis/**", "anon");
+        filterChainDefinitionMap.put("/T4Cloud-Support/druid/**", "anon");
 
         // ----------------------------------------------- 登录接口 -----------------------------------------------
         // 图片验证码获取接口

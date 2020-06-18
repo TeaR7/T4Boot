@@ -1,4 +1,4 @@
-//package com.t4cloud.boot.system.mq;
+package com.t4cloud.boot.system.mq;//package com.t4cloud.boot.system.mq;
 //
 //import com.t4cloud.t.base.entity.T4Log;
 //import com.t4cloud.t.service.service.IT4CommonService;

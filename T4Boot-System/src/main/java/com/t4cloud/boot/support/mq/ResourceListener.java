@@ -1,4 +1,4 @@
-//package com.t4cloud.boot.support.mq;
+package com.t4cloud.boot.support.mq;//package com.t4cloud.boot.support.mq;
 //
 //import cn.hutool.json.JSONUtil;
 //import com.t4cloud.boot.core.base.annotation.AutoLog;

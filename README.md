@@ -13,42 +13,34 @@ Spring Cloud 快速开发脚手架项目，同时支持单体Boot快速部署，
 
  【Boot版本】
  + Github：   https://github.com/TeaR7/T4Boot
- + Gitee：    https://gitee.com/TRCloud/T4CLOUD
+ + Gitee：    https://gitee.com/TRCloud/T4Boot
  
  【Cloud版本】
  + Github：   https://github.com/TeaR7/T4CLOUD
  + Gitee：    https://gitee.com/TRCloud/T4CLOUD
  
+ 【Web前端（Boot/Cloud通用）】
+ + Github：   https://github.com/TeaR7/T4-Web
+ + Gitee：    https://gitee.com/TRCloud/T4-Web
+ 
+ 
 ```
 【当前进度更新】
 
-## RELEASE-VERSION:0.1.2
-【2020.06.17】
+## RELEASE-VERSION:0.1.3
+【2020.06.18】
 
 服务端
 
-+ -a 增加微信登录功能（注册自动携带角色、动态租户微信key获取）
-+ -a 增加URL校验过滤
-+ -a 移植BOOT版本
++ -a 增加数据库脚本
 
-+ -u 更新树状接口的获取方式，避免断层的按钮权限丢失
-
-+ -f 用户资料刷新异常
++ -f 修正Core无法加载的问题
++ -f 修正字典翻译的JSONNull处理
++ -f 修正监控中心的对Cloud版本兼容性问题
 
 前台
 
-+ -a 图片组件优化
-+ -a 项目名和项目请求地址可配置
-+ -a 增加音频组件
-
-+ -u 图片上传组件优化（空提示、自适应方式）
-+ -u 菜单权限提示
-+ -u icon扩充
-+ -u vue-config本地转发配置
-+ -u 字典组件增加clear
-+ -u table行双击选中
-
-+ -f filterNull方法修正为0忽略的异常
++ -u 针对Boot的兼容测试和优化
 
 【计划】
 

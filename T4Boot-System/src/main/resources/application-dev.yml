@@ -1,5 +1,5 @@
 server:
-  port: 18010
+  port: 8080
   tomcat:
     max-swallow-size: -1
     mbeanregistry:
@@ -21,7 +21,7 @@ spring:
     name: '@project.name@'
   #redis 配置
   redis:
-    database: 8
+    database: 7
     host: 127.0.0.1
     lettuce:
       pool:
@@ -85,6 +85,7 @@ spring:
 management:
   endpoints:
     web:
+      base-path: /T4Cloud-Support/actuator
       exposure:
         include: metrics,httptrace,env
 
@@ -103,19 +104,10 @@ mybatis-plus:
       logic-delete-field: flag  #全局逻辑删除字段值 3.3.0开始支持，详情看下面。
       logic-delete-value: 0 # 逻辑已删除值(默认为 1)
       logic-not-delete-value: 1 # 逻辑未删除值(默认为 0)
-#Mybatis输出sql日志
+#输出日志
 logging:
   level:
     com.t4cloud.boot: debug
-
-# rocket mq 配置
-#rocketmq:
-#  #  name-server: 127.0.0.1:9876
-#  name-server: 139.224.227.28:18876
-#  producer:
-#    # 必须指定group
-#    group: T4Cloud
-
 
 #T4CLOUD自定义配置
 t4cloud:
@@ -130,14 +122,6 @@ t4cloud:
   actuator:
     ## 是否开启运行资源监控
     open: true
-  # 分布式任务调度器配置
-  job:
-    ## 是否启用定时任务
-    open: false
-    address: http://127.0.0.1:18020
-    ## 端口自动配置成本项目的端口-100
-    port: ${server.port}
-    appname: '@project.name@'
   # poi 配置
   excel:
     ## 导出数据的阈值，如果大于这个值，则采用大数据模式导出
@@ -145,24 +129,24 @@ t4cloud:
     ## 每次导入excel的页大小
     page-size: 1000
     ## 导出的时候OSS的前缀（任何资源管理器的END POINT）
-    oss: https://api.cloud.t4cloud.com/T4Cloud-Support/file/view/
+    oss: http://127.0.0.1:8080/t4boot-api/T4Cloud-Support/file/view/
     ## 导出的时候某些资源管理器是不带资源后缀的，需要而easypoi需要，所以手动配置一个
     temp-dir: /t4-pic
   minio:
     ## 是否开启minio客户端操作
     open: true
-    endpoint: http://139.224.227.28:18030
-    accessKey: AKIAIOSFODNN7T4CLOUD
-    secretKey: wJalrXUtnFEMI/T4CLOUD/bPxRfiCYEXAMPLEKEY
+    endpoint: http://127.0.0.1:9000
+    accessKey: T4Boot
+    secretKey: 123456
     bucket: t4cloud
   ## 短信相关参数
   sms:
-    access-key: LTAI4FiEw6PCto58qfCVoJtx
-    access-secret: wCJyVM4Zs77B1xqri8R3mimqMBn6X0
+    access-key: T4Boot
+    access-secret: T4Boot
   # 开启租户模式
   tenant: true
   tenant-key: T4Cloud
-  filter-table: sup_resource
+  filter-table: sup_resource,example_common
   # RSA 公私钥配置（公钥一般来说是给前端或者客户端使用的，不会再服务端使用到）
-  private-key: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAOpmm6AwtPN3LQXriHlXXy5TIm1z7DeBm51j5Q22L9IyuQk5B5Dbqe0CY4Ew1dh8+TUCrz0qzb+GIXXKGQHuodvTNZZT5ZHjhDnaIajOzmM8s767t/wm9MwLhVPgHHrwi7dyU5YCCrD3rzAYmk4Dtx9jnGRkx+61R9ESvBXwpsXTAgMBAAECgYAW0ojCjxt/PRJQKj+ueNhWnVeTyp6sRN1O9MP/ksaTM8caY8gdzZV88yeXE5curfRhufIwBXPk+v1VB6lpq79shS7axqun/nL+MbSOFL4pDH2yCWNyuWKoT64S4sCDojaYMXvzXUzd1TYvDM03jFfAGZYLzd3YMogdTruIuQUBMQJBAPcBVwn6N24htm+UT5H8cs8XU3F2Wby9IokrO4E1mYYPbXbzdMQDQGirRaqqCa47WkXdHXYDeIfCm2JoYvDd70sCQQDy78P7TwXNkS+o3f8ePVir7R4Y+H4nZ2A8+HZ0/dAs+UinpCNHP0e22leDjVG2FAtZ64NGe1yv5RnP6DOt1QaZAkA56OmEIFLAkkzYahghrOMp5Fke39V4J4uiRy2DRJLC2Hkci0WT8wM1xvnlYko0vBuVB5sxoOywP5L4hmqz+ARzAkEAp+FLFNr6DqHbRp4K0/He2gileOoX+9Dzb47gBV70wm+OZtMF0hGH1HO0cGNzaRkW8w/OiyFq3t66ZLN5KxKAWQJBALCOqYa4tSCrKV+LH7sSh5yy/xjD/NCSpAqbHrGllxT41xqUx9G511VNhfroq8FQL+Llq+fgCPN8OIwCRrg4qKk=
-  public-key: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDqZpugMLTzdy0F64h5V18uUyJtc+w3gZudY+UNti/SMrkJOQeQ26ntAmOBMNXYfPk1Aq89Ks2/hiF1yhkB7qHb0zWWU+WR44Q52iGozs5jPLO+u7f8JvTMC4VT4Bx68Iu3clOWAgqw968wGJpOA7cfY5xkZMfutUfRErwV8KbF0wIDAQAB
+  private-key: T4Boot
+  public-key: T4Boot
